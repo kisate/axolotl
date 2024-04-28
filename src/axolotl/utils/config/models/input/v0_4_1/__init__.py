@@ -1004,7 +1004,7 @@ class AxolotlInputConfig(
             )
 
         if data.get("eval_causal_lm_metrics"):
-            supported_metrics = ["sacrebleu", "comet", "ter", "chrf"]
+            supported_metrics = ["sacrebleu", "comet", "ter", "chrf", "accuracy"]
             if not isinstance(data.get("eval_causal_lm_metrics"), list):
                 raise ValueError("eval_causal_lm_metrics must be a list")
             # only ["sacrebleu", "comet", "ter", "chrf"] supported
