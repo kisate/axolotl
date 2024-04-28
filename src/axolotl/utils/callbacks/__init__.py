@@ -428,6 +428,9 @@ def causal_lm_bench_eval_callback_factory(trainer: Trainer, tokenizer):
                     )
                 except Exception:  # pylint: disable=broad-exception-caught
                     LOG.debug(
+                        f"{kwargs}"
+                    )
+                    LOG.debug(
                         f"Failed to compute metric {metric.name} with kwargs {kwargs.keys()}"
                     )
                 return metric_score
