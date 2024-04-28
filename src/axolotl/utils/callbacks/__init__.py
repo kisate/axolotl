@@ -424,22 +424,36 @@ def causal_lm_bench_eval_callback_factory(trainer: Trainer, tokenizer):
                     return (
                         metric_score["score"]
                         if "score" in metric_score
-                        else metric_score["mean_score"]
+                        else list(metric_score.values())[0]
                     )
-                except Exception:  # pylint: disable=broad-exception-caught
+                except Exception as e:  # pylint: disable=broad-exception-caught
                     LOG.debug(
                         f"{kwargs}"
                     )
+                    LOG.debug(e)
                     LOG.debug(
                         f"Failed to compute metric {metric.name} with kwargs {kwargs.keys()}"
                     )
                 return metric_score
+
+            def _to_label_id(label):
+                if label.lower() == "yes":
+                    return 0
+                elif label.lower() == "no":
+                    return 1
+                else:
+                    return 2
 
             def evaluate_preds(sources, predictions, references):
                 scores = {}
 
                 for metric_name, metric in self.metrics.items():
                     score = compute(
+                        metric,
+                        references=[_to_label_id(r) for r in references],
+                        predictions=[_to_label_id(p) for p in predictions],
+                    )
+                    score = score or compute(
                         metric,
                         references=references,
                         predictions=predictions,
