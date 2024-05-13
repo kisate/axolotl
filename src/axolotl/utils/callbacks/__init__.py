@@ -438,11 +438,9 @@ def causal_lm_bench_eval_callback_factory(trainer: Trainer, tokenizer):
 
             def _to_label_id(label):
                 if label.lower() == "yes":
-                    return 0
-                elif label.lower() == "no":
                     return 1
                 else:
-                    return 2
+                    return 0
 
             def evaluate_preds(sources, predictions, references):
                 scores = {}

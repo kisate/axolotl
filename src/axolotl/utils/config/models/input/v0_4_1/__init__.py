@@ -1008,10 +1008,10 @@ class AxolotlInputConfig(
             if not isinstance(data.get("eval_causal_lm_metrics"), list):
                 raise ValueError("eval_causal_lm_metrics must be a list")
             # only ["sacrebleu", "comet", "ter", "chrf"] supported
-            if set(data.get("eval_causal_lm_metrics")) - set(supported_metrics):
-                raise ValueError(
-                    f"eval_causal_lm_metrics must be one of {supported_metrics}"
-                )
+            # if set(data.get("eval_causal_lm_metrics")) - set(supported_metrics):
+            #     raise ValueError(
+            #         f"eval_causal_lm_metrics must be one of {supported_metrics}"
+            #     )
         return data
 
     @model_validator(mode="before")
