@@ -182,6 +182,7 @@ def load_tokenizer(cfg):
     ):
         # set a pad_token, but use eos_token so we don't add a new token
         tokenizer.pad_token = LLAMA_DEFAULT_EOS_TOKEN
+        tokenizer.padding_side = "left"
 
     if tokenizer.__class__.__name__ == "GPTNeoXTokenizerFast":
         tokenizer.add_special_tokens({"pad_token": "[PAD]"})
